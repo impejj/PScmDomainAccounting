@@ -1,0 +1,41 @@
+package com.profesys.scientiam.accounting.finaccount
+
+import java.util.Date;
+
+import com.profesys.scientiam.security.User;
+
+class FinAccountTransType {
+
+	String id
+	Character hasTable
+	String description
+	//Seguridad & Auditoria
+	Integer        state   // 0-Borrado 1-ok  2-modificado
+	User  	 userCreated
+	User  	 userUpdated
+	Date     dateCreated  //Date  fechaalta
+	Date     lastUpdated  //Date  fechaactualizacion
+	Date     dateDeleted
+	FinAccountTransType parentType
+
+	static hasMany = [finAccountTransTypeAttrs: FinAccountTransTypeAttr,
+	                  finAccountTransTypes: FinAccountTransType,
+	                  finAccountTranses: FinAccountTrans]
+
+	static mapping = {
+		id column: "fin_account_trans_type_id", generator: "assigned"
+		version true
+	}
+
+	static constraints = {
+		id maxSize: 36
+		hasTable nullable: true, maxSize: 1
+		description nullable: true
+			state nullable: false , display:false  
+		   userCreated nullable: false , display:false  
+		   userUpdated nullable: true , display:false  
+		   dateCreated nullable: true , display:false 
+		   lastUpdated nullable: true , display:false  
+		   dateDeleted nullable: true , display:false  
+	}
+}
